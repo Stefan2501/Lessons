@@ -8,10 +8,8 @@ print('The longest word: ' + longest_word)
 # Например, если было введено "abc cde def", то должно быть выведено "abcdef".
 
 string = input('enter a string:')
-new_string = ""
-for i in string:
-    if i not in new_string and i != " ":
-        new_string += i
+
+new_string = ''.join(set(string.replace(' ', '')))
 print(new_string)
 
 # Посчитать количество строчных (маленьких) и прописных (больших) букв в введенной строке.
@@ -24,7 +22,8 @@ for i in string_2:
     if i.isalpha() and i.isascii():
         if i.islower():
             lower_count += 1
-        elif i.isupper():
+        else:
             upper_count += 1
 print(f"quantity of lowercase letters: {lower_count}")
 print(f"quantity of uppercase letters: {upper_count}")
+gi
