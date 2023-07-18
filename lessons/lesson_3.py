@@ -26,4 +26,3 @@ for i in string_2:
             upper_count += 1
 print(f"quantity of lowercase letters: {lower_count}")
 print(f"quantity of uppercase letters: {upper_count}")
-gi
