@@ -6,23 +6,36 @@
 # Выходные данные - количество пар. Важно: 1 1 1 - это 3 пары, 1 1 1 1 - это 6 пар.
 
 lst = input('enter a string of numbers:').split()
-lst.sort()
+counter = {}
 count_pairs = 0
-for i in range(len(lst)):
-    for j in range(i + 1, len(lst)):
-        if lst[i] == lst[j]:
-            count_pairs += 1
-        else:
-            break
+
+for num in lst:
+    if num in counter:
+        counter[num] += 1
+    else:
+        counter[num] = 1
+
+for count in counter.values():
+    if count > 1:
+        count_pairs += count * (count - 1) // 2
+
 print(count_pairs)
 
 # Дан список. Выведите те его элементы, которые встречаются в списке только один раз.
 # Элементы нужно выводить в том порядке, в котором они встречаются в списке.
 
 elements = input('enter a list of element:').split()
-for i in elements:
-    if elements.count(i) == 1:
-        print(i)
+unique_elements = set()
+repeated_elements = set()
+for element in elements:
+    if element in unique_elements:
+        repeated_elements.add(element)
+    else:
+        unique_elements.add(element)
+
+unique_set = unique_elements - repeated_elements
+
+print(list(unique_set))
 
 # Дан список целых чисел. Требуется переместить все ненулевые элементы в левую часть списка,
 # не меняя их порядок, а все нули - в правую часть. Порядок ненулевых элементов изменять нельзя,
@@ -58,9 +71,9 @@ print(a, b, c)
 # последовательно выводились значения 1, 2, 3.
 # Убедитесь что len() исходного кортежа возвращает 1.
 
-tpl = 1,
-for i in range(3):
-    print(tpl[0] + i)
+tpl = ((1, 2, 3),)
+for i in tpl[0]:
+    print(i)
 print('tpl length:', len(tpl))
 
 # Даны два натуральных числа. Вычислите их наибольший общий делитель
@@ -90,16 +103,13 @@ print(max(a, b))
 
 n = int(input('enter number of country:'))
 world = {}
-for i in range(n):
+for _ in range(n):
     country_cities = input('enter country and ist cities:').split()
     country, cities = country_cities[0], country_cities[1:]
     for city in cities:
-        if city not in world:
-            world[city] = [country]
-        else:
-            world[city].append(country)
+        world.setdefault(city, []).append(country)
 m = int(input('enter number of requests:'))
-for i in range(m):
+for _ in range(m):
     city = input('enter city:')
     if city in world:
         countries = ', '.join(world[city])
@@ -114,7 +124,7 @@ for i in range(m):
 # Определите, сколько различных слов содержится в этом тексте.
 
 text = "Во входной  строке записан текст. Словом считается    последовательность\n непробельных символов идущих подряд"
-words = text.split()
+words = text.replace("\n", " ").split(" ")
 print(len(set(words)))
 
 # Даны два списка чисел. Cколько различных чисел содержится одновременно как в первом списке, так и во втором.
@@ -171,12 +181,10 @@ b = a[::2]
 c = [str(i) + 'x' for i in range(1, 5)]
 
 # Одной строкой (и одним выражением) удалите элемент '2x' из прошлого списка и напечатайте его.
-c.remove('2x')
-print(c)
+print(c.pop(c.index('2x')))
 
 # Скопируйте список и добавьте в него элемент 2x так чтобы в исходном списке этого элемента не было.
-d = c.copy()
-d.append('2x')
+c_copy = c + ['2x']
 
 # *****ГЕНЕРАТОРЫ СЛОВАРЕЙ*****
 
@@ -187,6 +195,7 @@ dct = {i: i ** 3 for i in range(1, 21)}
 # Создайте множество с помощью генератора множеств, состоящее из общих делителей чисел 1000 и 9000.
 s = {i for i in range(1, 1001) if 1000 % i == 0 and 9000 % i == 0}
 
+
 # *****ГЕНЕРАТОРЫ*****
 
 # Создайте генератор, который возвращает строки таблицы умножения от 0 до заданного числа.
@@ -196,8 +205,7 @@ s = {i for i in range(1, 1001) if 1000 % i == 0 and 9000 % i == 0}
 #    0	2  4  6
 #    0	3  6  9
 
-n = int(input('enter a number:'))
-table = ((i * j for j in range(n + 1)) for i in range(n + 1))
-
-for row in table:
-    print(tuple(row))
+def multiplication_table(d):
+    for i in range(d + 1):
+        row = [str(i * j) for j in range(d + 1)]
+        yield "\t".join(row)
