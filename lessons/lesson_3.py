@@ -9,7 +9,8 @@ print('The longest word: ' + longest_word)
 
 string = input('enter a string:')
 
-new_string = ''.join(set(string.replace(' ', '')))
+new_string = ''.join(dict.fromkeys(string.replace(' ', '')).keys())
+
 print(new_string)
 
 # Посчитать количество строчных (маленьких) и прописных (больших) букв в введенной строке.
